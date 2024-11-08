@@ -10,9 +10,11 @@ from starlette import status
 from database import get_db
 from domain.user import user_crud, user_schema
 from domain.user.user_crud import pwd_context
+from starlette.config import Config
 
-ACCESS_TOKEN_EXPIRE_MINUTES = 60*24
-SECRET_KEY = "4fa7258b5255e67fe14a26c25753b67c20ff66ce0231302c1a485562517778b8"
+config = Config('.env')
+ACCESS_TOKEN_EXPIRE_MINUTES = int(config('ACCESS_TOKEN_EXPIRE_MINUTES'))
+SECRET_KEY = config('SECRET_KEY')
 ALGORITHM = "HS256"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/user/login")
 
